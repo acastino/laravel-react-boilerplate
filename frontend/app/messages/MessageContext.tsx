@@ -87,7 +87,9 @@ export const MessageContextProvider = ({
     responseNotOk = () => {},
     pageNumTooLarge,
   }: asyncGetListPageArgs): Promise<boolean> => {
-    const response = await messageApi.index(pageNum);
+    const sortColumn = "created_at";
+    const sortDirection = "desc";
+    const response = await messageApi.index(pageNum, sortColumn, sortDirection);
     if (!response.ok) {
       responseNotOk(response);
       return false;

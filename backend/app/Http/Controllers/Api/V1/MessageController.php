@@ -12,8 +12,15 @@ class MessageController extends Controller
 {
     public function index(Request $request)
     {
+        $column = $request->query('column');
+        $direction = $request->query('direction');
         $maxRowsPerPage = $request->query('perPage', config('pagination.perPage'));
-        return PaginateJsonResource::collection(Message::paginate($maxRowsPerPage));
+
+        $query = Message::query();
+        if ($column && ($direction == 'asc' || $direction == 'desc'))
+            $query->orderBy($column, $direction);
+
+        return PaginateJsonResource::collection($query->paginate($maxRowsPerPage));
     }
 
     public function show(Message $message)

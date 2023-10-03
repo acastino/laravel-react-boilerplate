@@ -27,8 +27,15 @@ export default abstract class BaseApi<idType, ModelType> {
   /**
    * index
    */
-  public index(pageNum: number): Promise<Response> {
-    return this.request("get", `?page=${pageNum}`);
+  public index(
+    pageNum: number,
+    column?: string,
+    direction?: string
+  ): Promise<Response> {
+    return this.request(
+      "get",
+      `?page=${pageNum}&column=${column}&direction=${direction}`
+    );
   }
 
   /**
